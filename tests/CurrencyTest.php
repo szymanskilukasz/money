@@ -70,7 +70,7 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers  \SebastianBergmann\Money\Currency::__toString
-     * @depends testCanBeConstructedFromUppercaseString
+     * @depends testCanBeConstructedFromUppercaseCurrencyCode
      */
     public function testCanBeCastToString(Currency $c)
     {
@@ -79,7 +79,7 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers  \SebastianBergmann\Money\Currency::getCurrencyCode
-     * @depends testCanBeConstructedFromUppercaseString
+     * @depends testCanBeConstructedFromUppercaseCurrencyCode
      */
     public function testCurrencyCodeCanBeRetrieved(Currency $c)
     {
@@ -88,7 +88,7 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers  \SebastianBergmann\Money\Currency::getDefaultFractionDigits
-     * @depends testCanBeConstructedFromUppercaseString
+     * @depends testCanBeConstructedFromUppercaseCurrencyCode
      */
     public function testDefaultFractionDigitsCanBeRetrieved(Currency $c)
     {
@@ -97,7 +97,7 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers  \SebastianBergmann\Money\Currency::getDisplayName
-     * @depends testCanBeConstructedFromUppercaseString
+     * @depends testCanBeConstructedFromUppercaseCurrencyCode
      */
     public function testDisplayNameCanBeRetrieved(Currency $c)
     {
@@ -106,7 +106,7 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers  \SebastianBergmann\Money\Currency::getNumericCode
-     * @depends testCanBeConstructedFromUppercaseString
+     * @depends testCanBeConstructedFromUppercaseCurrencyCode
      */
     public function testNumericCodeCanBeRetrieved(Currency $c)
     {
@@ -115,7 +115,7 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers  \SebastianBergmann\Money\Currency::getSubUnit
-     * @depends testCanBeConstructedFromUppercaseString
+     * @depends testCanBeConstructedFromUppercaseCurrencyCode
      */
     public function testSubUnitCanBeRetrieved(Currency $c)
     {

@@ -70,7 +70,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers  \SebastianBergmann\Money\Money::getAmount
-     * @depends testObjectCanBeConstructedFromIntegerValueAndCurrencyObject
+     * @depends testCanBeConstructedFromIntegerValueAndCurrencyObject
      */
     public function testAmountCanBeRetrieved(Money $m)
     {
@@ -92,7 +92,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers  \SebastianBergmann\Money\Money::getCurrency
      * @uses    \SebastianBergmann\Money\Currency
-     * @depends testObjectCanBeConstructedFromIntegerValueAndCurrencyObject
+     * @depends testCanBeConstructedFromIntegerValueAndCurrencyObject
      */
     public function testCurrencyCanBeRetrieved(Money $m)
     {
