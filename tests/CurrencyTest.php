@@ -71,17 +71,15 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers  \SebastianBergmann\Money\Currency::__toString
      * @depends testCanBeConstructedFromUppercaseString
-     * @param   Currency $c
      */
     public function testCanBeCastToString(Currency $c)
     {
-        $this->assertEquals('EUR', (string)$c);
+        $this->assertEquals('EUR', (string) $c);
     }
 
     /**
      * @covers  \SebastianBergmann\Money\Currency::getCurrencyCode
      * @depends testCanBeConstructedFromUppercaseString
-     * @param   Currency $c
      */
     public function testCurrencyCodeCanBeRetrieved(Currency $c)
     {
@@ -91,7 +89,6 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers  \SebastianBergmann\Money\Currency::getDefaultFractionDigits
      * @depends testCanBeConstructedFromUppercaseString
-     * @param   Currency $c
      */
     public function testDefaultFractionDigitsCanBeRetrieved(Currency $c)
     {
@@ -101,7 +98,6 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers  \SebastianBergmann\Money\Currency::getDisplayName
      * @depends testCanBeConstructedFromUppercaseString
-     * @param   Currency $c
      */
     public function testDisplayNameCanBeRetrieved(Currency $c)
     {
@@ -111,7 +107,6 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers  \SebastianBergmann\Money\Currency::getNumericCode
      * @depends testCanBeConstructedFromUppercaseString
-     * @param   Currency $c
      */
     public function testNumericCodeCanBeRetrieved(Currency $c)
     {
@@ -121,7 +116,6 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers  \SebastianBergmann\Money\Currency::getSubUnit
      * @depends testCanBeConstructedFromUppercaseString
-     * @param   Currency $c
      */
     public function testSubUnitCanBeRetrieved(Currency $c)
     {
@@ -129,11 +123,12 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers            \SebastianBergmann\Money\Currency::__construct
-     * @expectedException \SebastianBergmann\Money\InvalidArgumentException
+     * @covers \SebastianBergmann\Money\Currency::__construct
      */
     public function testCannotBeCreatedFromUnknownCurrencyCode()
     {
+        $this->expectException(InvalidArgumentException::class);
+
         new Currency(null);
     }
 }

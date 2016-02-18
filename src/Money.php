@@ -14,10 +14,10 @@ namespace SebastianBergmann\Money;
  * Value Object that represents a monetary value
  * (using a currency's smallest unit).
  *
- * @package    Money
  * @author     Sebastian Bergmann <sebastian@phpunit.de>
  * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
+ *
  * @link       http://www.github.com/sebastianbergmann/money
  * @see        http://martinfowler.com/bliki/ValueObject.html
  * @see        http://martinfowler.com/eaaCatalog/money.html
@@ -25,7 +25,7 @@ namespace SebastianBergmann\Money;
 class Money implements \JsonSerializable
 {
     /**
-     * @var integer
+     * @var int
      */
     private $amount;
 
@@ -35,7 +35,7 @@ class Money implements \JsonSerializable
     private $currency;
 
     /**
-     * @var integer[]
+     * @var int[]
      */
     private static $roundingModes = [
         PHP_ROUND_HALF_UP,
@@ -45,8 +45,9 @@ class Money implements \JsonSerializable
     ];
 
     /**
-     * @param  integer                                  $amount
-     * @param  \SebastianBergmann\Money\Currency|string $currency
+     * @param int                                      $amount
+     * @param \SebastianBergmann\Money\Currency|string $currency
+     *
      * @throws \SebastianBergmann\Money\InvalidArgumentException
      */
     public function __construct($amount, $currency)
@@ -69,9 +70,11 @@ class Money implements \JsonSerializable
      * number of fractional digits then the value will be rounded to the
      * currency's number of fractional digits.
      *
-     * @param  string                                   $value
-     * @param  \SebastianBergmann\Money\Currency|string $currency
+     * @param string                                   $value
+     * @param \SebastianBergmann\Money\Currency|string $currency
+     *
      * @return static
+     *
      * @throws \SebastianBergmann\Money\InvalidArgumentException
      */
     public static function fromString($value, $currency)
@@ -103,6 +106,7 @@ class Money implements \JsonSerializable
      * Specify data which should be serialized to JSON
      *
      * @return mixed data which can be serialized by <b>json_encode</b>,
+     *
      * @link   http://php.net/manual/en/jsonserializable.jsonserialize.php
      */
     public function jsonSerialize()
@@ -116,7 +120,7 @@ class Money implements \JsonSerializable
     /**
      * Returns the monetary value represented by this object.
      *
-     * @return integer
+     * @return int
      */
     public function getAmount()
     {
@@ -148,8 +152,10 @@ class Money implements \JsonSerializable
      * Returns a new Money object that represents the monetary value
      * of the sum of this Money object and another.
      *
-     * @param  \SebastianBergmann\Money\Money $other
+     * @param \SebastianBergmann\Money\Money $other
+     *
      * @return static
+     *
      * @throws \SebastianBergmann\Money\CurrencyMismatchException
      * @throws \SebastianBergmann\Money\OverflowException
      */
@@ -168,8 +174,10 @@ class Money implements \JsonSerializable
      * Returns a new Money object that represents the monetary value
      * of the difference of this Money object and another.
      *
-     * @param  \SebastianBergmann\Money\Money $other
+     * @param \SebastianBergmann\Money\Money $other
+     *
      * @return static
+     *
      * @throws \SebastianBergmann\Money\CurrencyMismatchException
      * @throws \SebastianBergmann\Money\OverflowException
      */
@@ -199,9 +207,11 @@ class Money implements \JsonSerializable
      * Returns a new Money object that represents the monetary value
      * of this Money object multiplied by a given factor.
      *
-     * @param  float   $factor
-     * @param  integer $roundingMode
+     * @param float $factor
+     * @param int   $roundingMode
+     *
      * @return static
+     *
      * @throws \SebastianBergmann\Money\InvalidArgumentException
      */
     public function multiply($factor, $roundingMode = PHP_ROUND_HALF_UP)
@@ -223,8 +233,10 @@ class Money implements \JsonSerializable
      * Allocate the monetary value represented by this Money object
      * among N targets.
      *
-     * @param  integer $n
+     * @param int $n
+     *
      * @return static[]
+     *
      * @throws \SebastianBergmann\Money\InvalidArgumentException
      */
     public function allocateToTargets($n)
@@ -255,7 +267,8 @@ class Money implements \JsonSerializable
      * Allocate the monetary value represented by this Money object
      * using a list of ratios.
      *
-     * @param  array $ratios
+     * @param array $ratios
+     *
      * @return static[]
      */
     public function allocateByRatios(array $ratios)
@@ -291,9 +304,11 @@ class Money implements \JsonSerializable
      * (multiply(0.21), for instance, to calculate 21% of a monetary value
      * represented by a Money object) instead.
      *
-     * @param  float $percentage
-     * @param  integer $roundingMode
+     * @param float $percentage
+     * @param int   $roundingMode
+     *
      * @return static[]
+     *
      * @see    https://github.com/sebastianbergmann/money/issues/27
      */
     public function extractPercentage($percentage, $roundingMode = PHP_ROUND_HALF_UP)
@@ -317,8 +332,10 @@ class Money implements \JsonSerializable
      * if the value of this Money object is considered to be respectively
      * less than, equal to, or greater than the other Money object.
      *
-     * @param  \SebastianBergmann\Money\Money $other
-     * @return integer -1|0|1
+     * @param \SebastianBergmann\Money\Money $other
+     *
+     * @return int -1|0|1
+     *
      * @throws \SebastianBergmann\Money\CurrencyMismatchException
      */
     public function compareTo(Money $other)
@@ -335,8 +352,10 @@ class Money implements \JsonSerializable
     /**
      * Returns TRUE if this Money object equals to another.
      *
-     * @param  \SebastianBergmann\Money\Money $other
-     * @return boolean
+     * @param \SebastianBergmann\Money\Money $other
+     *
+     * @return bool
+     *
      * @throws \SebastianBergmann\Money\CurrencyMismatchException
      */
     public function equals(Money $other)
@@ -348,8 +367,10 @@ class Money implements \JsonSerializable
      * Returns TRUE if the monetary value represented by this Money object
      * is greater than that of another, FALSE otherwise.
      *
-     * @param  \SebastianBergmann\Money\Money $other
-     * @return boolean
+     * @param \SebastianBergmann\Money\Money $other
+     *
+     * @return bool
+     *
      * @throws \SebastianBergmann\Money\CurrencyMismatchException
      */
     public function greaterThan(Money $other)
@@ -361,8 +382,10 @@ class Money implements \JsonSerializable
      * Returns TRUE if the monetary value represented by this Money object
      * is greater than or equal that of another, FALSE otherwise.
      *
-     * @param  \SebastianBergmann\Money\Money $other
-     * @return boolean
+     * @param \SebastianBergmann\Money\Money $other
+     *
+     * @return bool
+     *
      * @throws \SebastianBergmann\Money\CurrencyMismatchException
      */
     public function greaterThanOrEqual(Money $other)
@@ -374,8 +397,10 @@ class Money implements \JsonSerializable
      * Returns TRUE if the monetary value represented by this Money object
      * is smaller than that of another, FALSE otherwise.
      *
-     * @param  \SebastianBergmann\Money\Money $other
-     * @return boolean
+     * @param \SebastianBergmann\Money\Money $other
+     *
+     * @return bool
+     *
      * @throws \SebastianBergmann\Money\CurrencyMismatchException
      */
     public function lessThan(Money $other)
@@ -387,8 +412,10 @@ class Money implements \JsonSerializable
      * Returns TRUE if the monetary value represented by this Money object
      * is smaller than or equal that of another, FALSE otherwise.
      *
-     * @param  \SebastianBergmann\Money\Money $other
-     * @return boolean
+     * @param \SebastianBergmann\Money\Money $other
+     *
+     * @return bool
+     *
      * @throws \SebastianBergmann\Money\CurrencyMismatchException
      */
     public function lessThanOrEqual(Money $other)
@@ -397,8 +424,9 @@ class Money implements \JsonSerializable
     }
 
     /**
-     * @param  \SebastianBergmann\Money\Money $a
-     * @param  \SebastianBergmann\Money\Money $b
+     * @param \SebastianBergmann\Money\Money $a
+     * @param \SebastianBergmann\Money\Money $b
+     *
      * @throws \SebastianBergmann\Money\CurrencyMismatchException
      */
     private function assertSameCurrency(Money $a, Money $b)
@@ -411,8 +439,10 @@ class Money implements \JsonSerializable
     /**
      * Raises an exception if the amount is not an integer
      *
-     * @param  number $amount
+     * @param number $amount
+     *
      * @return number
+     *
      * @throws \SebastianBergmann\Money\OverflowException
      */
     private function assertIsInteger($amount)
@@ -425,8 +455,10 @@ class Money implements \JsonSerializable
     /**
      * Raises an exception if the amount is outside of the integer bounds
      *
-     * @param  number $amount
+     * @param number $amount
+     *
      * @return number
+     *
      * @throws \SebastianBergmann\Money\OverflowException
      */
     private function assertInsideIntegerBounds($amount)
@@ -440,7 +472,9 @@ class Money implements \JsonSerializable
      * Cast an amount to an integer but ensure that the operation won't hide overflow
      *
      * @param number $amount
+     *
      * @return int
+     *
      * @throws \SebastianBergmann\Money\OverflowException
      */
     private function castToInt($amount)
@@ -451,7 +485,8 @@ class Money implements \JsonSerializable
     }
 
     /**
-     * @param  integer $amount
+     * @param int $amount
+     *
      * @return static
      */
     private function newMoney($amount)
@@ -460,8 +495,10 @@ class Money implements \JsonSerializable
     }
 
     /**
-     * @param  \SebastianBergmann\Money\Currency|string $currency
+     * @param \SebastianBergmann\Money\Currency|string $currency
+     *
      * @return \SebastianBergmann\Money\Currency
+     *
      * @throws \SebastianBergmann\Money\InvalidArgumentException
      */
     private static function handleCurrencyArgument($currency)
