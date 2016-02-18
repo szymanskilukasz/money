@@ -13,18 +13,9 @@ namespace SebastianBergmann\Money;
 class CurrencyTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers            \SebastianBergmann\Money\Currency::__construct
-     * @expectedException \SebastianBergmann\Money\InvalidArgumentException
-     */
-    public function testExceptionIsRaisedForInvalidConstructorArgument()
-    {
-        new Currency(null);
-    }
-
-    /**
      * @covers \SebastianBergmann\Money\Currency::__construct
      */
-    public function testCanBeConstructedFromUppercaseString()
+    public function testCanBeConstructedFromUppercaseCurrencyCode()
     {
         $c = new Currency('EUR');
 
@@ -36,7 +27,7 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers \SebastianBergmann\Money\Currency::__construct
      */
-    public function testCanBeConstructedFromLowercaseString()
+    public function testCanBeConstructedFromLowercaseCurrencyCode()
     {
         $c = new Currency('eur');
 
@@ -135,5 +126,14 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
     public function testSubUnitCanBeRetrieved(Currency $c)
     {
         $this->assertEquals(100, $c->getSubUnit());
+    }
+
+    /**
+     * @covers            \SebastianBergmann\Money\Currency::__construct
+     * @expectedException \SebastianBergmann\Money\InvalidArgumentException
+     */
+    public function testCannotBeCreatedFromUnknownCurrencyCode()
+    {
+        new Currency(null);
     }
 }

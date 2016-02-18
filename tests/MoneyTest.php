@@ -13,42 +13,11 @@ namespace SebastianBergmann\Money;
 class MoneyTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers            \SebastianBergmann\Money\Money::__construct
-     * @uses              \SebastianBergmann\Money\Currency
-     * @expectedException \SebastianBergmann\Money\InvalidArgumentException
-     */
-    public function testCannotBeConstructedFromNonIntegerValue()
-    {
-        new Money(null, new Currency('EUR'));
-    }
-
-    /**
-     * @covers            \SebastianBergmann\Money\Money::__construct
-     * @covers            \SebastianBergmann\Money\Money::handleCurrencyArgument
-     * @uses              \SebastianBergmann\Money\Currency
-     * @expectedException \SebastianBergmann\Money\InvalidArgumentException
-     */
-    public function testCannotBeConstructedUsingInvalidCurrencyArgument()
-    {
-        new Money(0, null);
-    }
-
-    /**
-     * @covers            \SebastianBergmann\Money\Money::fromString
-     * @uses              \SebastianBergmann\Money\Currency
-     * @expectedException \SebastianBergmann\Money\InvalidArgumentException
-     */
-    public function testCannotBeConstructedUsingInvalidValueArgument()
-    {
-        Money::fromString(1234, new Currency('EUR'));
-    }
-
-    /**
      * @covers \SebastianBergmann\Money\Money::__construct
      * @covers \SebastianBergmann\Money\Money::handleCurrencyArgument
      * @uses   \SebastianBergmann\Money\Currency
      */
-    public function testObjectCanBeConstructedFromIntegerValueAndCurrencyObject()
+    public function testCanBeConstructedFromIntegerValueAndCurrencyObject()
     {
         $m = new Money(0, new Currency('EUR'));
 
@@ -62,7 +31,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @covers \SebastianBergmann\Money\Money::handleCurrencyArgument
      * @uses   \SebastianBergmann\Money\Currency
      */
-    public function testObjectCanBeConstructedFromIntegerValueAndCurrencyString()
+    public function testCanBeConstructedFromIntegerValueAndCurrencyString()
     {
         $m = new Money(0, 'EUR');
 
@@ -77,7 +46,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @uses   \SebastianBergmann\Money\Money::handleCurrencyArgument
      * @uses   \SebastianBergmann\Money\Currency
      */
-    public function testObjectCanBeConstructedFromStringValueAndCurrencyObject()
+    public function testCanBeConstructedFromStringValueAndCurrencyObject()
     {
         $this->assertEquals(
             new Money(1234, new Currency('EUR')),
@@ -91,7 +60,7 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
      * @uses   \SebastianBergmann\Money\Money::handleCurrencyArgument
      * @uses   \SebastianBergmann\Money\Currency
      */
-    public function testObjectCanBeConstructedFromStringValueAndCurrencyString()
+    public function testCanBeConstructedFromStringValueAndCurrencyString()
     {
         $this->assertEquals(
             new Money(1234, new Currency('EUR')),
@@ -154,57 +123,6 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(3, $c->getAmount());
     }
 
-    /**
-     * @covers            \SebastianBergmann\Money\Money::add
-     * @covers            \SebastianBergmann\Money\Money::newMoney
-     * @covers            \SebastianBergmann\Money\Money::assertSameCurrency
-     * @covers            \SebastianBergmann\Money\Money::assertIsInteger
-     * @uses              \SebastianBergmann\Money\Money::__construct
-     * @uses              \SebastianBergmann\Money\Money::handleCurrencyArgument
-     * @uses              \SebastianBergmann\Money\Money::getAmount
-     * @uses              \SebastianBergmann\Money\Money::getCurrency
-     * @uses              \SebastianBergmann\Money\Currency
-     * @expectedException \SebastianBergmann\Money\OverflowException
-     */
-    public function testExceptionIsThrownForOverflowingAddition()
-    {
-        $a = new Money(PHP_INT_MAX, new Currency('EUR'));
-        $b = new Money(2, new Currency('EUR'));
-        $a->add($b);
-    }
-
-    /**
-     * @covers            \SebastianBergmann\Money\Money::assertInsideIntegerBounds
-     * @uses              \SebastianBergmann\Money\Money::__construct
-     * @uses              \SebastianBergmann\Money\Money::handleCurrencyArgument
-     * @uses              \SebastianBergmann\Money\Money::multiply
-     * @uses              \SebastianBergmann\Money\Money::castToInt
-     * @uses              \SebastianBergmann\Money\Currency
-     * @expectedException \SebastianBergmann\Money\OverflowException
-     */
-    public function testExceptionIsRaisedForIntegerOverflow()
-    {
-        $a = new Money(PHP_INT_MAX, new Currency('EUR'));
-        $a->multiply(2);
-    }
-
-    /**
-     * @covers            \SebastianBergmann\Money\Money::add
-     * @covers            \SebastianBergmann\Money\Money::assertSameCurrency
-     * @uses              \SebastianBergmann\Money\Money::__construct
-     * @uses              \SebastianBergmann\Money\Money::handleCurrencyArgument
-     * @uses              \SebastianBergmann\Money\Money::getAmount
-     * @uses              \SebastianBergmann\Money\Money::getCurrency
-     * @uses              \SebastianBergmann\Money\Currency
-     * @expectedException \SebastianBergmann\Money\CurrencyMismatchException
-     */
-    public function testExceptionIsRaisedWhenMoneyObjectWithDifferentCurrencyIsAdded()
-    {
-        $a = new Money(1, new Currency('EUR'));
-        $b = new Money(2, new Currency('USD'));
-
-        $a->add($b);
-    }
 
     /**
      * @covers \SebastianBergmann\Money\Money::subtract
@@ -228,42 +146,6 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $c->getAmount());
     }
 
-    /**
-     * @covers            \SebastianBergmann\Money\Money::subtract
-     * @covers            \SebastianBergmann\Money\Money::newMoney
-     * @covers            \SebastianBergmann\Money\Money::assertSameCurrency
-     * @covers            \SebastianBergmann\Money\Money::assertIsInteger
-     * @uses              \SebastianBergmann\Money\Money::__construct
-     * @uses              \SebastianBergmann\Money\Money::handleCurrencyArgument
-     * @uses              \SebastianBergmann\Money\Money::getAmount
-     * @uses              \SebastianBergmann\Money\Money::getCurrency
-     * @uses              \SebastianBergmann\Money\Currency
-     * @expectedException \SebastianBergmann\Money\OverflowException
-     */
-    public function testExceptionIsThrownForOverflowingSubtraction()
-    {
-        $a = new Money(-PHP_INT_MAX, new Currency('EUR'));
-        $b = new Money(2, new Currency('EUR'));
-        $a->subtract($b);
-    }
-
-    /**
-     * @covers            \SebastianBergmann\Money\Money::subtract
-     * @covers            \SebastianBergmann\Money\Money::assertSameCurrency
-     * @uses              \SebastianBergmann\Money\Money::__construct
-     * @uses              \SebastianBergmann\Money\Money::handleCurrencyArgument
-     * @uses              \SebastianBergmann\Money\Money::getAmount
-     * @uses              \SebastianBergmann\Money\Money::getCurrency
-     * @uses              \SebastianBergmann\Money\Currency
-     * @expectedException \SebastianBergmann\Money\CurrencyMismatchException
-     */
-    public function testExceptionIsRaisedWhenMoneyObjectWithDifferentCurrencyIsSubtracted()
-    {
-        $a = new Money(1, new Currency('EUR'));
-        $b = new Money(2, new Currency('USD'));
-
-        $b->subtract($a);
-    }
 
     /**
      * @covers \SebastianBergmann\Money\Money::negate
@@ -299,19 +181,6 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(1, $a->getAmount());
         $this->assertEquals(2, $b->getAmount());
-    }
-
-    /**
-     * @covers            \SebastianBergmann\Money\Money::multiply
-     * @uses              \SebastianBergmann\Money\Money::__construct
-     * @uses              \SebastianBergmann\Money\Money::handleCurrencyArgument
-     * @uses              \SebastianBergmann\Money\Currency
-     * @expectedException \SebastianBergmann\Money\InvalidArgumentException
-     */
-    public function testExceptionIsRaisedWhenMultipliedUsingInvalidRoundingMode()
-    {
-        $a = new Money(1, new Currency('EUR'));
-        $a->multiply(2, null);
     }
 
     /**
@@ -401,19 +270,6 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(new Money(8264, new Currency('EUR')), $extract['subtotal']);
         $this->assertEquals(new Money(1736, new Currency('EUR')), $extract['percentage']);
-    }
-
-    /**
-     * @covers            \SebastianBergmann\Money\Money::allocateToTargets
-     * @uses              \SebastianBergmann\Money\Money::__construct
-     * @uses              \SebastianBergmann\Money\Money::handleCurrencyArgument
-     * @uses              \SebastianBergmann\Money\Currency
-     * @expectedException \SebastianBergmann\Money\InvalidArgumentException
-     */
-    public function testExceptionIsRaisedWhenTryingToAllocateToInvalidNumberOfTargets()
-    {
-        $a = new Money(0, new Currency('EUR'));
-        $a->allocateToTargets(null);
     }
 
     /**
@@ -598,23 +454,6 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers            \SebastianBergmann\Money\Money::compareTo
-     * @covers            \SebastianBergmann\Money\Money::assertSameCurrency
-     * @uses              \SebastianBergmann\Money\Money::__construct
-     * @uses              \SebastianBergmann\Money\Money::handleCurrencyArgument
-     * @uses              \SebastianBergmann\Money\Money::getCurrency
-     * @uses              \SebastianBergmann\Money\Currency
-     * @expectedException \SebastianBergmann\Money\CurrencyMismatchException
-     */
-    public function testExceptionIsRaisedWhenComparedToMoneyObjectWithDifferentCurrency()
-    {
-        $a = new Money(1, new Currency('EUR'));
-        $b = new Money(2, new Currency('USD'));
-
-        $a->compareTo($b);
-    }
-
-    /**
      * @covers \SebastianBergmann\Money\Money::jsonSerialize
      * @uses   \SebastianBergmann\Money\Money::__construct
      * @uses   \SebastianBergmann\Money\Currency
@@ -626,5 +465,168 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
             '{"amount":1,"currency":"EUR"}',
             json_encode(new EUR(1))
         );
+    }
+
+    /**
+     * @covers            \SebastianBergmann\Money\Money::__construct
+     * @uses              \SebastianBergmann\Money\Currency
+     * @expectedException \SebastianBergmann\Money\InvalidArgumentException
+     */
+    public function testCannotBeCreatedFromInvalidAmount()
+    {
+        new Money(null, new Currency('EUR'));
+    }
+
+    /**
+     * @covers            \SebastianBergmann\Money\Money::__construct
+     * @covers            \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @uses              \SebastianBergmann\Money\Currency
+     * @expectedException \SebastianBergmann\Money\InvalidArgumentException
+     */
+    public function testCannotBeCreatedFromInvalidCurrency()
+    {
+        new Money(0, null);
+    }
+
+    /**
+     * @covers            \SebastianBergmann\Money\Money::fromString
+     * @uses              \SebastianBergmann\Money\Currency
+     * @expectedException \SebastianBergmann\Money\InvalidArgumentException
+     */
+    public function testCannotBeCreatedFromInvalidString()
+    {
+        Money::fromString(1234, new Currency('EUR'));
+    }
+
+    /**
+     * @covers            \SebastianBergmann\Money\Money::add
+     * @covers            \SebastianBergmann\Money\Money::newMoney
+     * @covers            \SebastianBergmann\Money\Money::assertSameCurrency
+     * @covers            \SebastianBergmann\Money\Money::assertIsInteger
+     * @uses              \SebastianBergmann\Money\Money::__construct
+     * @uses              \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @uses              \SebastianBergmann\Money\Money::getAmount
+     * @uses              \SebastianBergmann\Money\Money::getCurrency
+     * @uses              \SebastianBergmann\Money\Currency
+     * @expectedException \SebastianBergmann\Money\OverflowException
+     */
+    public function testCannotPerformOverflowingAddition()
+    {
+        $a = new Money(PHP_INT_MAX, new Currency('EUR'));
+        $b = new Money(2, new Currency('EUR'));
+        $a->add($b);
+    }
+
+    /**
+     * @covers            \SebastianBergmann\Money\Money::assertInsideIntegerBounds
+     * @uses              \SebastianBergmann\Money\Money::__construct
+     * @uses              \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @uses              \SebastianBergmann\Money\Money::multiply
+     * @uses              \SebastianBergmann\Money\Money::castToInt
+     * @uses              \SebastianBergmann\Money\Currency
+     * @expectedException \SebastianBergmann\Money\OverflowException
+     */
+    public function testCannotBeCreatedForAmountOutsideOfIntegerBounds()
+    {
+        $a = new Money(PHP_INT_MAX, new Currency('EUR'));
+        $a->multiply(2);
+    }
+
+    /**
+     * @covers            \SebastianBergmann\Money\Money::add
+     * @covers            \SebastianBergmann\Money\Money::assertSameCurrency
+     * @uses              \SebastianBergmann\Money\Money::__construct
+     * @uses              \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @uses              \SebastianBergmann\Money\Money::getAmount
+     * @uses              \SebastianBergmann\Money\Money::getCurrency
+     * @uses              \SebastianBergmann\Money\Currency
+     * @expectedException \SebastianBergmann\Money\CurrencyMismatchException
+     */
+    public function testCannotAddMoneyObjectWithDifferentCurrency()
+    {
+        $a = new Money(1, new Currency('EUR'));
+        $b = new Money(2, new Currency('USD'));
+
+        $a->add($b);
+    }
+
+    /**
+     * @covers            \SebastianBergmann\Money\Money::subtract
+     * @covers            \SebastianBergmann\Money\Money::newMoney
+     * @covers            \SebastianBergmann\Money\Money::assertSameCurrency
+     * @covers            \SebastianBergmann\Money\Money::assertIsInteger
+     * @uses              \SebastianBergmann\Money\Money::__construct
+     * @uses              \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @uses              \SebastianBergmann\Money\Money::getAmount
+     * @uses              \SebastianBergmann\Money\Money::getCurrency
+     * @uses              \SebastianBergmann\Money\Currency
+     * @expectedException \SebastianBergmann\Money\OverflowException
+     */
+    public function testCannotPerformOverflowingSubtraction()
+    {
+        $a = new Money(-PHP_INT_MAX, new Currency('EUR'));
+        $b = new Money(2, new Currency('EUR'));
+        $a->subtract($b);
+    }
+
+    /**
+     * @covers            \SebastianBergmann\Money\Money::subtract
+     * @covers            \SebastianBergmann\Money\Money::assertSameCurrency
+     * @uses              \SebastianBergmann\Money\Money::__construct
+     * @uses              \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @uses              \SebastianBergmann\Money\Money::getAmount
+     * @uses              \SebastianBergmann\Money\Money::getCurrency
+     * @uses              \SebastianBergmann\Money\Currency
+     * @expectedException \SebastianBergmann\Money\CurrencyMismatchException
+     */
+    public function testCannotSubtractMoneyObjectWithDifferentCurrency()
+    {
+        $a = new Money(1, new Currency('EUR'));
+        $b = new Money(2, new Currency('USD'));
+
+        $b->subtract($a);
+    }
+
+    /**
+     * @covers            \SebastianBergmann\Money\Money::multiply
+     * @uses              \SebastianBergmann\Money\Money::__construct
+     * @uses              \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @uses              \SebastianBergmann\Money\Currency
+     * @expectedException \SebastianBergmann\Money\InvalidArgumentException
+     */
+    public function testCannotBeMultipliedUsingInvalidRoundingMode()
+    {
+        $a = new Money(1, new Currency('EUR'));
+        $a->multiply(2, null);
+    }
+
+    /**
+     * @covers            \SebastianBergmann\Money\Money::allocateToTargets
+     * @uses              \SebastianBergmann\Money\Money::__construct
+     * @uses              \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @uses              \SebastianBergmann\Money\Currency
+     * @expectedException \SebastianBergmann\Money\InvalidArgumentException
+     */
+    public function testCannotBeAllocatedToInvalidNumberOfTargets()
+    {
+        $a = new Money(0, new Currency('EUR'));
+        $a->allocateToTargets(null);
+    }
+
+    /**
+     * @covers            \SebastianBergmann\Money\Money::compareTo
+     * @covers            \SebastianBergmann\Money\Money::assertSameCurrency
+     * @uses              \SebastianBergmann\Money\Money::__construct
+     * @uses              \SebastianBergmann\Money\Money::handleCurrencyArgument
+     * @uses              \SebastianBergmann\Money\Money::getCurrency
+     * @uses              \SebastianBergmann\Money\Currency
+     * @expectedException \SebastianBergmann\Money\CurrencyMismatchException
+     */
+    public function testCannotBeComparedToMoneyObjectWithDifferentCurrency()
+    {
+        $a = new Money(1, new Currency('EUR'));
+        $b = new Money(2, new Currency('USD'));
+
+        $a->compareTo($b);
     }
 }
