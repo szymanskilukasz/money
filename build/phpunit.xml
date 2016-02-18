@@ -20,6 +20,7 @@
         <log type="coverage-crap4j" target="logs/crap4j.xml"/>
         <log type="coverage-xml" target="logs/coverage"/>
         <log type="junit" target="logs/junit.xml"/>
+        <log type="testdox-html" target="testdox/index.html"/>
     </logging>
 
     <filter>
